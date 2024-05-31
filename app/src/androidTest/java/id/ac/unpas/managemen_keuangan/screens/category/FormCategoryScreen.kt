@@ -1,4 +1,4 @@
-package id.ac.unpas.agenda.ui.screens
+package id.ac.unpas.managemen_keuangan.screens.category
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,12 +8,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FormCategoryScreen(modifier: Modifier = Modifier, id : String? = null) {
-
+    val viewModel = hiltViewModel<TodoViewModel>()
     val scope = rememberCoroutineScope()
 
     val name = remember { mutableStateOf(TextFieldValue("")) }
