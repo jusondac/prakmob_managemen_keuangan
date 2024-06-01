@@ -1,4 +1,4 @@
-package id.ac.unpas.agenda.ui.theme
+package id.ac.unpas.managemen_keuangan.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

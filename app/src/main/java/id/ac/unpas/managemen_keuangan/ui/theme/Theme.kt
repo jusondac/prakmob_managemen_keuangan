@@ -1,4 +1,4 @@
-package id.ac.unpas.agenda.ui.theme
+package id.ac.unpas.managemen_keuangan.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun AgendaTheme(
+fun ManagemenTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
