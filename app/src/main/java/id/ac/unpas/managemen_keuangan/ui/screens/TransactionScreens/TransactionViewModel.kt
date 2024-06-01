@@ -5,6 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import id.ac.unpas.managemen_keuangan.models.Transaction
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import id.ac.unpas.managemen_keuangan.base.LiveCoroutinesViewModel
+import id.ac.unpas.managemen_keuangan.persistences.TransactionDao
+import TransactionRepository
+import javax.inject.Inject
 
 class TransactionViewModel {
     private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -20,24 +27,27 @@ class TransactionViewModel {
     val todos : LiveData<List<Transaction>> = _todo.switchMap {
         _isLoading.postValue(true)
         launchOnViewModelScope {
-            todoRepository.loadItems(
+            TransactionRepository.loadItems(
                 onSuccess = {
                     _isLoading.postValue(false)
                 },
                 onError = {
                     _isLoading.postValue(false)
-                    Log.e("TodoViewModel", it)
+                    Log.e("TransactionViewModel", it)
                 }
             ).asLiveData()
         }
     }
 
-    suspend fun insert(id: String,
-                       title: String,
-                       description: String,
-                       dueDate: String) {
+    suspend fun insert(id: Int,
+                       name: String,
+                       category_id: String,
+                       user_id: String,
+                       date: Long,
+                       amount: Double,
+                       description: String) {
         _isLoading.postValue(true)
-        todoRepository.insert(Todo(id, title, description, dueDate),
+        TransactionRepository.insert(Transaction( id,name, category_id ,user_id, date, amount, description),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
@@ -51,12 +61,16 @@ class TransactionViewModel {
         )
     }
 
-    suspend fun update(id: String,
-                       title: String,
-                       description: String,
-                       dueDate: String) {
+    suspend fun update(id: Int,
+                       name: String,
+                       category_id: String,
+                       user_id: String,
+                       date: Long,
+                       amount: Double,
+                       description: String
+                       ) {
         _isLoading.postValue(true)
-        todoRepository.update(Todo(id, title, description, dueDate),
+        TransactionRepository.update(Transaction( id,name, category_id ,user_id, date, amount, description),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
@@ -70,9 +84,9 @@ class TransactionViewModel {
         )
     }
 
-    suspend fun delete(id: String) {
+    suspend fun delete(id: Int) {
         _isLoading.postValue(true)
-        todoRepository.delete(id,
+        TransactionRepository.delete(id,
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
@@ -86,9 +100,9 @@ class TransactionViewModel {
         )
     }
 
-    suspend fun find(id: String) {
-        val todo = todoRepository.find(id)
-        todo?.let {
+    suspend fun find(id: Int) {
+        val transaction = TransactionRepository.find(id)
+        transaction?.let {
             _item.postValue(it)
         }
     }
