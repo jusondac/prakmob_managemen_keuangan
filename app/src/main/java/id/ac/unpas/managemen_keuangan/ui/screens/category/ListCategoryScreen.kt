@@ -13,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import id.ac.unpas.managemen_keuangan.models.Category
 
 @Composable
 fun ListCategoryScreen(modifier: Modifier = Modifier, onDelete: () -> Unit, onClick: (String) -> Unit) {
@@ -20,7 +21,7 @@ fun ListCategoryScreen(modifier: Modifier = Modifier, onDelete: () -> Unit, onCl
     val scope = rememberCoroutineScope()
     val viewModel = hiltViewModel<CategoryViewModel>()
 
-    val list: List<CategoryViewModel> by viewModel.categories.observeAsState(listOf())
+    val list: List<Category> by viewModel.categories.observeAsState(listOf())
     val name = remember { mutableStateOf("CATEGORY") }
     val openDialog = remember {
         mutableStateOf(false)
