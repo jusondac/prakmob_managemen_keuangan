@@ -103,4 +103,5 @@ class CategoryRepository @Inject constructor(private val api: CategoryApi, priva
                 onError(message())
             }
     }
+    suspend fun find(id: String) = dao.find(id)
 }
