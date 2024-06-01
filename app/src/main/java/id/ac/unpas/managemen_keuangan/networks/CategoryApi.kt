@@ -1,7 +1,7 @@
 package id.ac.unpas.managemen_keuangan.networks
 
 import com.skydoves.sandwich.ApiResponse
-//import id.ac.unpas.agenda.models.Category
+import id.ac.unpas.managemen_keuangan.models.Category
 import id.ac.unpas.managemen_keuangan.networks.responses.categories.CategoryGetResponse
 import id.ac.unpas.managemen_keuangan.networks.responses.categories.CategoryPostResponse
 import id.ac.unpas.managemen_keuangan.networks.responses.categories.CategoryDeleteResponse
