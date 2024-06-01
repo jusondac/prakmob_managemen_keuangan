@@ -25,7 +25,6 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
 
     val viewModel = hiltViewModel<TransactionViewModel>()
     val scope = rememberCoroutineScope()
-
     val name = remember { mutableStateOf(TextFieldValue("")) }
     val category_id = remember { mutableStateOf(TextFieldValue("")) }
     val user_id = remember { mutableStateOf(TextFieldValue("")) }
