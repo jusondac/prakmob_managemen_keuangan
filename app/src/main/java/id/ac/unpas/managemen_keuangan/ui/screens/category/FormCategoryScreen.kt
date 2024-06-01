@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FormCategoryScreen(modifier: Modifier = Modifier, id : String? = null) {
-    val viewModel = hiltViewModel<TodoViewModel>()
+    val viewModel = hiltViewModel<CategoryViewModel>()
     val scope = rememberCoroutineScope()
 
     val name = remember { mutableStateOf(TextFieldValue("")) }
