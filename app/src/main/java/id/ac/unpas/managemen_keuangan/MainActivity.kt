@@ -14,9 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ManagemenTheme {
                 // A surface container using the 'background' color from the theme
-                MainScreen(onExitClick = {
-                    finish()
-                })
+                MainScreen()
             }
         }
     }

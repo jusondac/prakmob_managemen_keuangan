@@ -17,7 +17,7 @@ import id.ac.unpas.managemen_keuangan.models.Transaction
 import kotlinx.coroutines.launch
 
 @Composable
-fun ListTodoScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
+fun ListTransactionScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
 
     val scope = rememberCoroutineScope()
     val viewModel = hiltViewModel<TransactionViewModel>()
@@ -45,7 +45,7 @@ fun ListTodoScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
         if (it) {
             title.value = "Loading..."
         } else {
-            title.value = "TODO"
+            title.value = "Transaction"
         }
     }
 }

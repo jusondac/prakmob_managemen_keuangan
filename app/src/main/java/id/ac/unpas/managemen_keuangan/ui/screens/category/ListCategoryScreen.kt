@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import id.ac.unpas.managemen_keuangan.models.Category
 
 @Composable
-fun ListCategoryScreen(modifier: Modifier = Modifier, onDelete: () -> Unit, onClick: (String) -> Unit) {
+fun ListCategoryScreen(modifier: Modifier = Modifier,  onClick: (String) -> Unit) {
 
     val scope = rememberCoroutineScope()
     val viewModel = hiltViewModel<CategoryViewModel>()
@@ -56,10 +56,10 @@ fun ListCategoryScreen(modifier: Modifier = Modifier, onDelete: () -> Unit, onCl
         }
     }
 
-    viewModel.isDeleted.observe(LocalLifecycleOwner.current) {
-        if (deleting.value && it) {
-            deleting.value = false
-            onDelete()
-        }
-    }
+//    viewModel.isDeleted.observe(LocalLifecycleOwner.current) {
+//        if (deleting.value && it) {
+//            deleting.value = false
+//            onDelete()
+//        }
+//    }
 }
