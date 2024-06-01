@@ -6,7 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-//import id.ac.unpas.managemen_keuangan.models.Category
+import id.ac.unpas.managemen_keuangan.models.Category
 
 @Dao
 interface CategoryDao {
