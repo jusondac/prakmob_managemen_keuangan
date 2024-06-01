@@ -1,7 +1,7 @@
 package id.ac.unpas.managemen_keuangan.networks
 
 import com.skydoves.sandwich.ApiResponse
-//import id.ac.unpas.agenda.models.Transaction
+import id.ac.unpas.managemen_keuangan.models.Transaction
 import id.ac.unpas.managemen_keuangan.networks.responses.transactions.TransactionGetResponse
 import id.ac.unpas.managemen_keuangan.networks.responses.transactions.TransactionPostResponse
 import id.ac.unpas.managemen_keuangan.networks.responses.transactions.TransactionDeleteResponse

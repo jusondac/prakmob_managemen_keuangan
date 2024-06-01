@@ -64,7 +64,7 @@ class TransactionRepository @Inject constructor(private val api: TransactionApi,
                        onSuccess: () -> Unit,
                        onError: (String) -> Unit) {
         dao.upsert(transaction)
-        api.update(transaction.id, transaction)
+        api.update(transaction.id.toString(), transaction)
             .suspendOnSuccess {
                 data.whatIfNotNull {
                     if (it.success) {
