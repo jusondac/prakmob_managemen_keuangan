@@ -1,4 +1,4 @@
-package id.ac.unpas.managemen_keuangan.networks.responses.categories
+package id.ac.unpas.managemen_keuangan.networks.responses.transactions
 
 data class TransactionDeleteResponse (
     val message: String,
