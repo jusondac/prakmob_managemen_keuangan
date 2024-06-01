@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
 
-//    val viewModel = hiltViewModel<TransactionViewModel>()
+    val viewModel = hiltViewModel<TransactionViewModel>()
     val scope = rememberCoroutineScope()
 
     val name = remember { mutableStateOf(TextFieldValue("")) }
@@ -86,15 +86,15 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
 
             Row {
                 Button(modifier = Modifier.weight(5f), onClick = {
-//                    if (id != null) {
-//                        scope.launch {
-//                            viewModel.update(id, name.value.text, category_id.value.text, date.value.text, amount.value.text, description.value.text)
-//                        }
-//                    } else {
-//                        scope.launch {
-//                            viewModel.insert(uuid4().toString(), name.value.text, category_id.value.text, date.value.text, amount.value.text, description.value.text)
-//                        }
-//                    }
+                    if (id != null) {
+                        scope.launch {
+                            viewModel.update(id, name.value.text, category_id.value.text,user_id.value.text, date.value.text, amount.value.text, description.value.text)
+                        }
+                    } else {
+                        scope.launch {
+                            viewModel.insert(uuid4().toString(), name.value.text, category_id.value.text,user_id.value.text, date.value.text, amount.value.text, description.value.text)
+                        }
+                    }
                 }) {
                     Text(text = "Simpan")
                 }
@@ -113,33 +113,33 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
         }
 
 
-//        viewModel.isDone.observe(LocalLifecycleOwner.current) {
-//            if (it) {
-//                name.value = TextFieldValue("")
-//                category_id.value = TextFieldValue("")
-//                user_id.value = TextFieldValue("")
-//                date.value = TextFieldValue("")
-//                amount.value = TextFieldValue("")
-//                description.value = TextFieldValue("")
-//            }
-//        }
-//
-//        LaunchedEffect(id) {
-//            if (id != null) {
-//                scope.launch {
-//                    viewModel.find(id)
-//                }
-//            }
-//        }
-//
-//        viewModel.item.observe(LocalLifecycleOwner.current) {
-//            name.value = TextFieldValue(it(name))
-//            category_id.value = TextFieldValue(it(category_id))
-//            user_id.value = TextFieldValue(it(user_id))
-//            date.value = TextFieldValue(it(date))
-//            amount.value = TextFieldValue(it(amount))
-//            description.value = TextFieldValue(it(description))
-//        }
+        viewModel.isDone.observe(LocalLifecycleOwner.current) {
+            if (it) {
+                name.value = TextFieldValue("")
+                category_id.value = TextFieldValue("")
+                user_id.value = TextFieldValue("")
+                date.value = TextFieldValue("")
+                amount.value = TextFieldValue("")
+                description.value = TextFieldValue("")
+            }
+        }
+
+        LaunchedEffect(id) {
+            if (id != null) {
+                scope.launch {
+                    viewModel.find(id)
+                }
+            }
+        }
+
+        viewModel.item.observe(LocalLifecycleOwner.current) {
+            name.value = TextFieldValue(it.name)
+            category_id.value = TextFieldValue(it.category_id)
+            user_id.value = TextFieldValue(it.user_id)
+            date.value = TextFieldValue(it.date.toString())
+            amount.value = TextFieldValue(it.amount.toString())
+            description.value = TextFieldValue(it.description)
+        }
     }
 
 }

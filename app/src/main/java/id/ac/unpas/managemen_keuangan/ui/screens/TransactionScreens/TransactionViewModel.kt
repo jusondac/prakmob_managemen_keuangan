@@ -10,10 +10,11 @@ import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ac.unpas.managemen_keuangan.base.LiveCoroutinesViewModel
 import id.ac.unpas.managemen_keuangan.persistences.TransactionDao
-import TransactionRepository
+import id.ac.unpas.managemen_keuangan.repositories.TransactionRepository
 import javax.inject.Inject
 
-class TransactionViewModel {
+@HiltViewModel
+class TransactionViewModel @Inject constructor(private val TransactionRepository: TransactionRepository) : LiveCoroutinesViewModel() {
     private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
     val isDone: LiveData<Boolean> = _isDone
 
@@ -23,8 +24,8 @@ class TransactionViewModel {
     private val _item: MutableLiveData<Transaction> = MutableLiveData()
     val item: LiveData<Transaction> = _item
 
-    private val _todo: MutableLiveData<Boolean> = MutableLiveData(false)
-    val todos : LiveData<List<Transaction>> = _todo.switchMap {
+    private val _transaction: MutableLiveData<Boolean> = MutableLiveData(false)
+    val transactions : LiveData<List<Transaction>> = _transaction.switchMap {
         _isLoading.postValue(true)
         launchOnViewModelScope {
             TransactionRepository.loadItems(
@@ -39,69 +40,69 @@ class TransactionViewModel {
         }
     }
 
-    suspend fun insert(id: Int,
+    suspend fun insert(id: String,
                        name: String,
                        category_id: String,
                        user_id: String,
-                       date: Long,
-                       amount: Double,
+                       date: String,
+                       amount: String,
                        description: String) {
         _isLoading.postValue(true)
-        TransactionRepository.insert(Transaction( id,name, category_id ,user_id, date, amount, description),
+        TransactionRepository.insert(Transaction( id,name, category_id ,user_id, date.toLong(), amount.toDouble(), description),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             },
             onError = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             }
         )
     }
 
-    suspend fun update(id: Int,
+    suspend fun update(id: String,
                        name: String,
                        category_id: String,
                        user_id: String,
-                       date: Long,
-                       amount: Double,
+                       date: String,
+                       amount: String,
                        description: String
                        ) {
         _isLoading.postValue(true)
-        TransactionRepository.update(Transaction( id,name, category_id ,user_id, date, amount, description),
+        TransactionRepository.update(Transaction( id,name, category_id ,user_id, date.toLong(), amount.toDouble(), description),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             },
             onError = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             }
         )
     }
 
-    suspend fun delete(id: Int) {
+    suspend fun delete(id: String) {
         _isLoading.postValue(true)
-        TransactionRepository.delete(id,
+        TransactionRepository.delete(id.toString(),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             },
             onError = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
-                _todo.postValue(true)
+                _transaction.postValue(true)
             }
         )
     }
 
-    suspend fun find(id: Int) {
-        val transaction = TransactionRepository.find(id)
+    suspend fun find(id: String) {
+        val transaction = TransactionRepository.find(id.toString())
         transaction?.let {
             _item.postValue(it)
         }

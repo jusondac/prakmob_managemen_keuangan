@@ -22,7 +22,7 @@ fun ListTodoScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
     val scope = rememberCoroutineScope()
     val viewModel = hiltViewModel<TransactionViewModel>()
 
-    val list: List<Transaction> by viewModel.todos.observeAsState(listOf())
+    val list: List<Transaction> by viewModel.transactions.observeAsState(listOf())
     val title = remember { mutableStateOf("Transaction") }
 
     Column(modifier = modifier.fillMaxWidth()) {
@@ -30,7 +30,7 @@ fun ListTodoScreen(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(list.size) { index ->
                 val item = list[index]
-                TransactionItem(item = , onEditClick = ) {
+                TransactionItem(item = item, onEditClick = { id ->
                     onClick(id)
                 }, onDeleteClick = { id ->
                     scope.launch {
