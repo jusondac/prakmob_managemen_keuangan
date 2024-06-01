@@ -102,5 +102,8 @@ class TransactionRepository @Inject constructor(private val api: TransactionApi,
             .suspendOnException {
                 onError(message())
             }
+
     }
+
+    suspend fun find(id: String) = dao.find(id)
 }

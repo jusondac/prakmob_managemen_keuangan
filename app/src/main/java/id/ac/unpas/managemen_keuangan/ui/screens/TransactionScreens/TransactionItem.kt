@@ -16,13 +16,13 @@ fun TransactionItem(item: Transaction, onEditClick: (String) -> Unit, onDeleteCl
         Text(modifier = Modifier.weight(3f), text = item.name)
         Text(modifier = Modifier.weight(3f), text = item.category_id)
         Text(modifier = Modifier.weight(3f), text = item.user_id)
-        Text(modifier = Modifier.weight(3f), text = item.date)
-        Text(modifier = Modifier.weight(3f), text = item.amount)
+        Text(modifier = Modifier.weight(3f), text = item.date.toString())
+        Text(modifier = Modifier.weight(3f), text = item.amount.toString())
         Text(modifier = Modifier.weight(3f), text = item.description)
-        Button(modifier = Modifier.weight(1.5f), onClick = { onEditClick(item.id) }) {
+        Button(modifier = Modifier.weight(1.5f), onClick = { onEditClick(item.id.toString()) }) {
             Image(painterResource(id = R.drawable.baseline_edit_24), contentDescription = "Edit")
         }
-        Button(modifier = Modifier.weight(1.5f), onClick = { onDeleteClick(item.id) }) {
+        Button(modifier = Modifier.weight(1.5f), onClick = { onDeleteClick(item.id.toString()) }) {
             Image(painterResource(id = R.drawable.baseline_delete_24), contentDescription = "Delete")
         }
     }

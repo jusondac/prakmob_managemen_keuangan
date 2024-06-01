@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transaction")
 data class Transaction(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    //@PrimaryKey(autoGenerate = true)
+    val id: String,
     val name: String,
     val category_id: String,
     val user_id: String,
