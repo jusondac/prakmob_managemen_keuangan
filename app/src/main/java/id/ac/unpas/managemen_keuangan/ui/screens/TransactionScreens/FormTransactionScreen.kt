@@ -25,10 +25,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benasher44.uuid.uuid4
 import id.ac.unpas.managemen_keuangan.models.Category
@@ -48,6 +50,7 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
         Icons.Filled.KeyboardArrowDown
     }
     val list: List<Category> by CategoryviewModel.categories.observeAsState(listOf())
+//    val list = listOf("rizki", "haikal")
 
     val viewModel = hiltViewModel<TransactionViewModel>()
     val scope = rememberCoroutineScope()
@@ -67,14 +70,17 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
             .fillMaxWidth()) {
             OutlinedTextField(
                 label = { Text(text = "Name") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 value = name.value, onValueChange = {
                     name.value = it
                 })
 
             OutlinedTextField(
                 label = { Text(text = "Category") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().onGloballyPositioned {coordinates ->
+                    textFiledSize = coordinates.size.toSize()
+                },
                 value = selectedCategory, onValueChange = { selectedCategory = it },
                 trailingIcon = {
                     Icon(icon,"", Modifier.clickable { expanded = !expanded })
@@ -91,7 +97,7 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
                     DropdownMenuItem(
                         text = {Text(category.name)},
                         onClick = {
-                            selectedCategory = category.id
+                            selectedCategory = category.name
                             expanded = false
                         })
                 }
