@@ -42,18 +42,20 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
 
     var expanded by remember { mutableStateOf(false) }
     val CategoryviewModel = hiltViewModel<CategoryViewModel>()
-    var selectedCategory by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf("")}
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     val icon = if(expanded){
         Icons.Filled.KeyboardArrowUp
     }else{
         Icons.Filled.KeyboardArrowDown
     }
+
     val list: List<Category> by CategoryviewModel.categories.observeAsState(listOf())
 //    val list = listOf("rizki", "haikal")
 
     val viewModel = hiltViewModel<TransactionViewModel>()
     val scope = rememberCoroutineScope()
+
     val name = remember { mutableStateOf(TextFieldValue("")) }
     val category_id = remember { mutableStateOf(TextFieldValue("")) }
     val user_id = remember { mutableStateOf(TextFieldValue("")) }
@@ -68,6 +70,7 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
         Column(modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()) {
+
             OutlinedTextField(
                 label = { Text(text = "Name") },
                 modifier = Modifier
@@ -141,7 +144,7 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
                         }
                     } else {
                         scope.launch {
-                            viewModel.insert(uuid4().toString(), name.value.text, selectedCategory,user_id.value.text, date.value.text, amount.value.text, description.value.text)
+                            viewModel.insert(uuid4().toString(), name.value.text, selectedCategory,user_id.value.text, date.value.text.toLong(), amount.value.text.toDouble(), description.value.text)
                         }
                     }
                 }) {

@@ -64,7 +64,7 @@ class CategoryRepository @Inject constructor(private val api: CategoryApi, priva
                        onSuccess: () -> Unit,
                        onError: (String) -> Unit) {
         dao.upsert(category)
-        api.update(category.id.toString(), category)
+        api.update(category.id, category)
             .suspendOnSuccess {
                 data.whatIfNotNull {
                     if (it.success) {

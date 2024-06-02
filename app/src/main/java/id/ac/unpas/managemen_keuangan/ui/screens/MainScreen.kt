@@ -84,7 +84,7 @@ fun MainScreen(onExitClick: () -> Unit){
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically) {
                         Image(
-                            painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            painterResource(id = R.drawable.baseline_monetization_on_24),
                             contentDescription = "Transaction",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                             modifier = Modifier.clickable {
@@ -92,7 +92,7 @@ fun MainScreen(onExitClick: () -> Unit){
                             }.weight(0.5f)
                         )
                         Image(
-                            painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            painterResource(id = R.drawable.baseline_category_24),
                             contentDescription = "Category",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                             modifier = Modifier.clickable {
@@ -113,7 +113,7 @@ fun MainScreen(onExitClick: () -> Unit){
 //        },
 //        floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
-        NavHost(navController = navController, startDestination = "home") {
+        NavHost(navController = navController, startDestination = NavScreen.Login.route) {
 
             composable(NavScreen.Login.route) {
                 currentRoute.value = NavScreen.Login.route
