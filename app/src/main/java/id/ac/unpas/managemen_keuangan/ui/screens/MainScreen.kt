@@ -169,6 +169,13 @@ fun MainScreen(onExitClick: () -> Unit){
                 currentRoute.value = NavScreen.EditTransaction.route
                 FormTransactionScreen(modifier = Modifier.padding(innerPadding), id = id)
             }
+
+//            composable(NavScreen.Login.route) {
+//                currentRoute.value = NavScreen.Login.route
+//                LoginScreen(modifier = Modifier.padding(innerPadding)) {
+//                    navController.navigate(NavScreen.Home.route)
+//                }
+//            }
         }
 
     }
