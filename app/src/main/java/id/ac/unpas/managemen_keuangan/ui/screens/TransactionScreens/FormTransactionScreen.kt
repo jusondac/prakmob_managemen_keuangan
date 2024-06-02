@@ -1,27 +1,53 @@
 package id.ac.unpas.managemen_keuangan.ui.screens.TransactionScreens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benasher44.uuid.uuid4
+import id.ac.unpas.managemen_keuangan.models.Category
+import id.ac.unpas.managemen_keuangan.ui.screens.category.CategoryViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
+
+    var expanded by remember { mutableStateOf(false) }
+    val CategoryviewModel = hiltViewModel<CategoryViewModel>()
+    var selectedCategory by remember { mutableStateOf("") }
+    var textFiledSize by remember { mutableStateOf(Size.Zero) }
+    val icon = if(expanded){
+        Icons.Filled.KeyboardArrowUp
+    }else{
+        Icons.Filled.KeyboardArrowDown
+    }
+    val list: List<Category> by CategoryviewModel.categories.observeAsState(listOf())
 
     val viewModel = hiltViewModel<TransactionViewModel>()
     val scope = rememberCoroutineScope()
@@ -49,9 +75,27 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
             OutlinedTextField(
                 label = { Text(text = "Category") },
                 modifier = Modifier.fillMaxWidth(),
-                value = category_id.value, onValueChange = {
-                    category_id.value = it
-                })
+                value = selectedCategory, onValueChange = { selectedCategory = it },
+                trailingIcon = {
+                    Icon(icon,"", Modifier.clickable { expanded = !expanded })
+                }
+            )
+            
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false},
+                modifier = Modifier
+                    .width(with(LocalDensity.current){textFiledSize.width.toDp()})
+            ) {
+                list.forEach{category ->
+                    DropdownMenuItem(
+                        text = {Text(category.name)},
+                        onClick = {
+                            selectedCategory = category.id
+                            expanded = false
+                        })
+                }
+            }
 
             OutlinedTextField(
                 label = { Text(text = "User") },
@@ -87,11 +131,11 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
                 Button(modifier = Modifier.weight(5f), onClick = {
                     if (id != null) {
                         scope.launch {
-                            viewModel.update(id, name.value.text, category_id.value.text,user_id.value.text, date.value.text, amount.value.text, description.value.text)
+                            viewModel.update(id, name.value.text, selectedCategory,user_id.value.text, date.value.text, amount.value.text, description.value.text)
                         }
                     } else {
                         scope.launch {
-                            viewModel.insert(uuid4().toString(), name.value.text, category_id.value.text,user_id.value.text, date.value.text, amount.value.text, description.value.text)
+                            viewModel.insert(uuid4().toString(), name.value.text, selectedCategory,user_id.value.text, date.value.text, amount.value.text, description.value.text)
                         }
                     }
                 }) {
@@ -142,3 +186,4 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
     }
 
 }
+
