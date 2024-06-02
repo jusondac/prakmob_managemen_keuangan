@@ -27,10 +27,5 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier, onLi
             Text(text = "Tambah Category")
         }
 
-        Button(onClick = {
-            navController.navigate(NavScreen.Login.route)
-        }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Login")
-        }
     }
 }
