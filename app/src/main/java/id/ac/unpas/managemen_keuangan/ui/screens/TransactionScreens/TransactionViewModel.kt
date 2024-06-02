@@ -44,11 +44,11 @@ class TransactionViewModel @Inject constructor(private val TransactionRepository
                        name: String,
                        category_id: String,
                        user_id: String,
-                       date: String,
-                       amount: String,
+                       date: Long,
+                       amount: Double,
                        description: String) {
         _isLoading.postValue(true)
-        TransactionRepository.insert(Transaction( id,name, category_id ,user_id, date.toLong(), amount.toDouble(), description),
+        TransactionRepository.insert(Transaction( id,name, category_id ,user_id, date, amount, description),
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
