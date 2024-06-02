@@ -1,11 +1,27 @@
 package id.ac.unpas.managemen_keuangan.ui.screens
 
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +31,9 @@ import id.ac.unpas.managemen_keuangan.ui.screens.TransactionScreens.FormTransact
 import id.ac.unpas.managemen_keuangan.ui.screens.TransactionScreens.ListTransactionScreen
 import id.ac.unpas.managemen_keuangan.ui.screens.category.FormCategoryScreen
 import id.ac.unpas.managemen_keuangan.ui.screens.category.ListCategoryScreen
+import id.ac.unpas.managemen_keuangan.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(onExitClick: () -> Unit){
     val navController = rememberNavController()
@@ -23,8 +41,86 @@ fun MainScreen(onExitClick: () -> Unit){
         mutableStateOf("")
     }
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Manajemen Keuangan") },
+                navigationIcon = {
+                    if (currentRoute.value != NavScreen.Login.route) {
+                        Image(
+                            painterResource(id = R.drawable.baseline_home_24),
+                            contentDescription = "Menu",
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                            modifier = Modifier.clickable {
+                                navController.navigate(NavScreen.Home.route)
+                            }
+                        )
+                    }
+
+                },
+                colors = topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                actions = {
+                    Image(
+                        painterResource(id = R.drawable.baseline_exit_to_app_24),
+                        contentDescription = "Exit",
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                        modifier = Modifier.clickable {
+                            onExitClick()
+                        }
+                    )
+                }
+            )
+        },
+        bottomBar = {
+            if (currentRoute.value != NavScreen.Login.route) {
+                BottomAppBar (
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Row (modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            contentDescription = "Transaction",
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                            modifier = Modifier.clickable {
+                                navController.navigate(NavScreen.ListTransaction.route)
+                            }.weight(0.5f)
+                        )
+                        Image(
+                            painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            contentDescription = "Category",
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                            modifier = Modifier.clickable {
+                                navController.navigate(NavScreen.ListCategory.route)
+                            }.weight(0.5f)
+                        )
+                    }
+                }
+            }
+
+        },
+//        floatingActionButton = {
+//            if (currentRoute.value == NavScreen.Home.route) {
+//                FloatingActionButton(onClick = { navController.navigate(NavScreen.Add.route) }) {
+//                    Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "Add")
+//                }
+//            }
+//        },
+//        floatingActionButtonPosition = FabPosition.End
+    ) { innerPadding ->
         NavHost(navController = navController, startDestination = "home") {
+
+            composable(NavScreen.Login.route) {
+                currentRoute.value = NavScreen.Login.route
+                LoginScreen(modifier = Modifier.padding(innerPadding)) {
+                    navController.navigate(NavScreen.Home.route)
+                }
+            }
 
             composable(NavScreen.Home.route) {
                 currentRoute.value = NavScreen.Home.route
@@ -74,12 +170,12 @@ fun MainScreen(onExitClick: () -> Unit){
                 FormTransactionScreen(modifier = Modifier.padding(innerPadding), id = id)
             }
 
-            composable(NavScreen.Login.route) {
-                currentRoute.value = NavScreen.Login.route
-                LoginScreen(modifier = Modifier.padding(innerPadding)) {
-                    navController.navigate(NavScreen.Home.route)
-                }
-            }
+//            composable(NavScreen.Login.route) {
+//                currentRoute.value = NavScreen.Login.route
+//                LoginScreen(modifier = Modifier.padding(innerPadding)) {
+//                    navController.navigate(NavScreen.Home.route)
+//                }
+//            }
         }
 
     }
