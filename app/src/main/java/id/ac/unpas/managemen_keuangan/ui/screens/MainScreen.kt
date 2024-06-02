@@ -17,7 +17,7 @@ import id.ac.unpas.managemen_keuangan.ui.screens.category.FormCategoryScreen
 import id.ac.unpas.managemen_keuangan.ui.screens.category.ListCategoryScreen
 
 @Composable
-fun MainScreen(){
+fun MainScreen(onExitClick: () -> Unit){
     val navController = rememberNavController()
     val currentRoute = remember {
         mutableStateOf("")
