@@ -84,19 +84,19 @@ fun MainScreen(onExitClick: () -> Unit){
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically) {
                         Image(
-                            painterResource(id = R.drawable.baseline_add_24),
-                            contentDescription = "Tambah",
+                            painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            contentDescription = "Transaction",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                             modifier = Modifier.clickable {
-                                navController.navigate(NavScreen.Add.route)
+                                navController.navigate(NavScreen.ListTransaction.route)
                             }.weight(0.5f)
                         )
                         Image(
                             painterResource(id = R.drawable.baseline_remove_red_eye_24),
-                            contentDescription = "Lihat",
+                            contentDescription = "Category",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                             modifier = Modifier.clickable {
-                                navController.navigate(NavScreen.List.route)
+                                navController.navigate(NavScreen.ListCategory.route)
                             }.weight(0.5f)
                         )
                     }
@@ -104,16 +104,23 @@ fun MainScreen(onExitClick: () -> Unit){
             }
 
         },
-        floatingActionButton = {
-            if (currentRoute.value == NavScreen.Home.route) {
-                FloatingActionButton(onClick = { navController.navigate(NavScreen.Add.route) }) {
-                    Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "Add")
-                }
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End
+//        floatingActionButton = {
+//            if (currentRoute.value == NavScreen.Home.route) {
+//                FloatingActionButton(onClick = { navController.navigate(NavScreen.Add.route) }) {
+//                    Image(painterResource(id = R.drawable.baseline_add_24), contentDescription = "Add")
+//                }
+//            }
+//        },
+//        floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
         NavHost(navController = navController, startDestination = "home") {
+
+            composable(NavScreen.Login.route) {
+                currentRoute.value = NavScreen.Login.route
+                LoginScreen(modifier = Modifier.padding(innerPadding)) {
+                    navController.navigate(NavScreen.Home.route)
+                }
+            }
 
             composable(NavScreen.Home.route) {
                 currentRoute.value = NavScreen.Home.route
