@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import id.ac.unpas.managemen_keuangan.models.Category
+import kotlinx.coroutines.launch
 
 @Composable
 fun ListCategoryScreen(modifier: Modifier = Modifier,  onClick: (String) -> Unit) {
@@ -40,9 +41,9 @@ fun ListCategoryScreen(modifier: Modifier = Modifier,  onClick: (String) -> Unit
                 CategoryItem(item = item, onEditClick = { id ->
                     onClick(id)
                 }, onDeleteClick = { id ->
-                    deleting.value = true
-                    activeId.value = id
-                    openDialog.value = true
+                    scope.launch {
+                        viewModel.delete(id)
+                    }
                 })
             }
         }
