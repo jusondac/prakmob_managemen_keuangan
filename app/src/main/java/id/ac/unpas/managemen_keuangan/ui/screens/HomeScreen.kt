@@ -28,9 +28,9 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier, onLi
         }
 
         Button(onClick = {
-            onLihat()
+            navController.navigate(NavScreen.Login.route)
         }, modifier = Modifier.fillMaxWidth()) {
-            Text(text = "Lihat Transaksi")
+            Text(text = "Login")
         }
     }
 }
