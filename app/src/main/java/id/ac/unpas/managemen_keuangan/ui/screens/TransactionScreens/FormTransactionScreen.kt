@@ -34,7 +34,9 @@ import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.benasher44.uuid.uuid4
 import id.ac.unpas.managemen_keuangan.models.Category
+import id.ac.unpas.managemen_keuangan.models.User
 import id.ac.unpas.managemen_keuangan.ui.screens.category.CategoryViewModel
+import id.ac.unpas.managemen_keuangan.ui.screens.UserScreens.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,14 +45,28 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
     var expanded by remember { mutableStateOf(false) }
     val CategoryviewModel = hiltViewModel<CategoryViewModel>()
     var selectedCategory by remember { mutableStateOf("")}
+
+    var expanded_user by remember { mutableStateOf(false) }
+    val UserviewModel = hiltViewModel<UserViewModel>()
+    var selectedUser by remember { mutableStateOf("")}
+
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
-    val icon = if(expanded){
+
+    val category_icon = if(expanded){
         Icons.Filled.KeyboardArrowUp
     }else{
         Icons.Filled.KeyboardArrowDown
     }
 
+    val user_icon = if(expanded_user){
+        Icons.Filled.KeyboardArrowUp
+    }else{
+        Icons.Filled.KeyboardArrowDown
+    }
+
+
     val list: List<Category> by CategoryviewModel.categories.observeAsState(listOf())
+    val user: List<User> by UserviewModel.users.observeAsState(listOf())
 //    val list = listOf("rizki", "haikal")
 
     val viewModel = hiltViewModel<TransactionViewModel>()
@@ -86,7 +102,7 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
                 },
                 value = selectedCategory, onValueChange = { selectedCategory = it },
                 trailingIcon = {
-                    Icon(icon,"", Modifier.clickable { expanded = !expanded })
+                    Icon(category_icon,"", Modifier.clickable { expanded = !expanded })
                 }
             )
             
@@ -108,10 +124,30 @@ fun FormTransactionScreen(modifier: Modifier = Modifier, id : String? = null) {
 
             OutlinedTextField(
                 label = { Text(text = "User") },
-                modifier = Modifier.fillMaxWidth(),
-                value = user_id.value, onValueChange = {
-                    user_id.value = it
-                })
+                modifier = Modifier.fillMaxWidth().onGloballyPositioned {coordinates ->
+                    textFiledSize = coordinates.size.toSize()
+                },
+                value = selectedUser, onValueChange = { selectedUser = it },
+                trailingIcon = {
+                    Icon(user_icon,"", Modifier.clickable { expanded_user = !expanded_user })
+                }
+            )
+
+            DropdownMenu(
+                expanded = expanded_user,
+                onDismissRequest = { expanded_user = false},
+                modifier = Modifier
+                    .width(with(LocalDensity.current){textFiledSize.width.toDp()})
+            ) {
+                user.forEach{user ->
+                    DropdownMenuItem(
+                        text = {Text(user.name)},
+                        onClick = {
+                            selectedUser= user.name
+                            expanded_user = false
+                        })
+                }
+            }
 
             OutlinedTextField(
                 label = { Text(text = "Date") },

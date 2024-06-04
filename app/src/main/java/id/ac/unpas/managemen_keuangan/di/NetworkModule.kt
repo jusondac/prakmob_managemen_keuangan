@@ -8,6 +8,7 @@ import dagger.hilt.components.SingletonComponent
 import id.ac.unpas.managemen_keuangan.networks.RequestInterceptor
 import id.ac.unpas.managemen_keuangan.networks.TransactionApi
 import id.ac.unpas.managemen_keuangan.networks.CategoryApi
+import id.ac.unpas.managemen_keuangan.networks.UserApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,7 +28,7 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://ppm-api.nimbus.biz.id/api/")
+            .baseUrl("http://ppm-api.nimbus.biz.id/api/finance/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .build()
@@ -43,5 +44,11 @@ object NetworkModule {
     @Singleton
     fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
         return retrofit.create(CategoryApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 }

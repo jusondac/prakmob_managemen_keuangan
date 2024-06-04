@@ -14,17 +14,17 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface TransactionApi {
-    @GET("todo")
+    @GET("transaction")
     suspend fun findAll(): ApiResponse<TransactionGetResponse>
 
-    @POST("todo")
+    @POST("transaction")
     @Headers("Content-Type: application/json")
-    suspend fun insert(@Body todo: Transaction): ApiResponse<TransactionPostResponse>
+    suspend fun insert(@Body transaction: Transaction): ApiResponse<TransactionPostResponse>
 
-    @PUT("todo/{id}")
+    @PUT("transaction/{id}")
     @Headers("Content-Type: application/json")
-    suspend fun update(@Path("id") id: String, @Body category: Transaction): ApiResponse<TransactionPostResponse>
+    suspend fun update(@Path("id") id: String, @Body transaction: Transaction): ApiResponse<TransactionPostResponse>
 
-    @DELETE("todo/{id}")
+    @DELETE("transaction/{id}")
     suspend fun delete(@Path("id") id: String): ApiResponse<TransactionDeleteResponse>
 }

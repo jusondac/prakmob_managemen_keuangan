@@ -14,17 +14,17 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface CategoryApi {
-    @GET("todo")
+    @GET("category")
     suspend fun findAll(): ApiResponse<CategoryGetResponse>
 
-    @POST("todo")
+    @POST("category")
     @Headers("Content-Type: application/json")
     suspend fun insert(@Body todo: Category): ApiResponse<CategoryPostResponse>
 
-    @PUT("todo/{id}")
+    @PUT("category/{id}")
     @Headers("Content-Type: application/json")
     suspend fun update(@Path("id") id: String, @Body category: Category): ApiResponse<CategoryPostResponse>
 
-    @DELETE("todo/{id}")
+    @DELETE("category/{id}")
     suspend fun delete(@Path("id") id: String): ApiResponse<CategoryDeleteResponse>
 }

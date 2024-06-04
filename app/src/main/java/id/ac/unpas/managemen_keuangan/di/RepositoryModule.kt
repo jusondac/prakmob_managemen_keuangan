@@ -7,10 +7,13 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import id.ac.unpas.managemen_keuangan.networks.CategoryApi
 import id.ac.unpas.managemen_keuangan.networks.TransactionApi
+import id.ac.unpas.managemen_keuangan.networks.UserApi
 import id.ac.unpas.managemen_keuangan.persistences.CategoryDao
 import id.ac.unpas.managemen_keuangan.persistences.TransactionDao
+import id.ac.unpas.managemen_keuangan.persistences.UserDao
 import id.ac.unpas.managemen_keuangan.repositories.CategoryRepository
 import id.ac.unpas.managemen_keuangan.repositories.TransactionRepository
+import id.ac.unpas.managemen_keuangan.repositories.UserRepository
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -25,5 +28,11 @@ object RepositoryModule {
     @ViewModelScoped
     fun provideCategoryRepository(categoryDao: CategoryDao, categoryApi: CategoryApi): CategoryRepository {
         return CategoryRepository(categoryApi, categoryDao)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideUserRepository(userDao: UserDao, userApi: UserApi): UserRepository {
+        return UserRepository(userApi, userDao)
     }
 }
