@@ -22,9 +22,21 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier, onLi
         }
 
         Button(onClick = {
+            navController.navigate(NavScreen.AddUser.route)
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Tambah User")
+        }
+
+        Button(onClick = {
             navController.navigate(NavScreen.AddCategory.route)
         }, modifier = Modifier.fillMaxWidth()) {
             Text(text = "Tambah Category")
+        }
+
+        Button(onClick = {
+            navController.navigate(NavScreen.ListUser.route)
+        }, modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Lihat User")
         }
 
     }

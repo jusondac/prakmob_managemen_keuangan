@@ -32,6 +32,8 @@ import id.ac.unpas.managemen_keuangan.ui.screens.TransactionScreens.ListTransact
 import id.ac.unpas.managemen_keuangan.ui.screens.category.FormCategoryScreen
 import id.ac.unpas.managemen_keuangan.ui.screens.category.ListCategoryScreen
 import id.ac.unpas.managemen_keuangan.R
+import id.ac.unpas.managemen_keuangan.ui.screens.UserScreens.FormUserScreen
+import id.ac.unpas.managemen_keuangan.ui.screens.UserScreens.ListUserScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,17 +89,32 @@ fun MainScreen(onExitClick: () -> Unit){
                             painterResource(id = R.drawable.baseline_monetization_on_24),
                             contentDescription = "Transaction",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
-                            modifier = Modifier.clickable {
-                                navController.navigate(NavScreen.ListTransaction.route)
-                            }.weight(0.5f)
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(NavScreen.ListTransaction.route)
+                                }
+                                .weight(0.5f)
                         )
                         Image(
                             painterResource(id = R.drawable.baseline_category_24),
                             contentDescription = "Category",
                             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
-                            modifier = Modifier.clickable {
-                                navController.navigate(NavScreen.ListCategory.route)
-                            }.weight(0.5f)
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(NavScreen.ListCategory.route)
+                                }
+                                .weight(0.5f)
+                        )
+
+                        Image(
+                            painterResource(id = R.drawable.baseline_people_24),
+                            contentDescription = "User",
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(NavScreen.ListUser.route)
+                                }
+                                .weight(0.5f)
                         )
                     }
                 }
@@ -134,6 +151,11 @@ fun MainScreen(onExitClick: () -> Unit){
                 FormTransactionScreen(modifier = Modifier.padding(innerPadding))
             }
 
+            composable(NavScreen.AddUser.route) {
+                currentRoute.value = NavScreen.AddUser.route
+                FormUserScreen(modifier = Modifier.padding(innerPadding))
+            }
+
             composable(NavScreen.AddCategory.route) {
                 currentRoute.value = NavScreen.AddCategory.route
                 FormCategoryScreen(modifier = Modifier.padding(innerPadding))
@@ -152,6 +174,13 @@ fun MainScreen(onExitClick: () -> Unit){
                 }
             }
 
+            composable(NavScreen.ListUser.route) {
+                currentRoute.value = NavScreen.ListUser.route
+                ListUserScreen(modifier = Modifier.padding(innerPadding)) { id ->
+                    navController.navigate("${NavScreen.EditUser.route}/$id")
+                }
+            }
+
             composable(NavScreen.EditCategory.routeWithArgument,
                 arguments = listOf(navArgument(NavScreen.EditCategory.argument0) { type = NavType.StringType }))
             { backStackEntry ->
@@ -159,6 +188,15 @@ fun MainScreen(onExitClick: () -> Unit){
 
                 currentRoute.value = NavScreen.EditCategory.route
                 FormCategoryScreen(modifier = Modifier.padding(innerPadding), id = id)
+            }
+
+            composable(NavScreen.EditUser.routeWithArgument,
+                arguments = listOf(navArgument(NavScreen.EditUser.argument0) { type = NavType.StringType }))
+            { backStackEntry ->
+                val id = backStackEntry.arguments?.getString(NavScreen.EditUser.argument0) ?: return@composable
+
+                currentRoute.value = NavScreen.EditUser.route
+                FormUserScreen(modifier = Modifier.padding(innerPadding), id = id)
             }
 
             composable(NavScreen.EditTransaction.routeWithArgument,
