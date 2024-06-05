@@ -1,4 +1,4 @@
-package id.ac.unpas.managemen_keuangan.ui.screens.category
+package id.ac.unpas.managemen_keuangan.ui.screens.CategoryScreens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

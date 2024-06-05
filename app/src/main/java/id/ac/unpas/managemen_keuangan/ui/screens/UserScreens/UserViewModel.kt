@@ -83,7 +83,8 @@ class UserViewModel @Inject constructor(private val UserRepository: UserReposito
 
     suspend fun delete(id: String) {
         _isLoading.postValue(true)
-        UserRepository.delete(id.toString(),
+        UserRepository.delete(
+            id,
             onSuccess = {
                 _isLoading.postValue(false)
                 _isDone.postValue(true)
