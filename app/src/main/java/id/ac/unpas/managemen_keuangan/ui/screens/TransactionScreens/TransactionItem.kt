@@ -25,8 +25,8 @@ fun TransactionItem(item: Transaction, onEditClick: (String) -> Unit, onDeleteCl
             .padding(8.dp)
             .border(1.dp, Color.Magenta, shape = RoundedCornerShape(15.dp))
     ) {
-        Row(Modifier.padding(8.dp)) {
-            Column(modifier = Modifier.weight(0.5f)) {
+        Row(Modifier.padding(7.dp)) {
+            Column(modifier = Modifier.weight(0.3f)) {
                 Text(text = "Nama" )
                 Text(text = "Kategori"  )
                 Text(text = "User_id" )
@@ -42,7 +42,7 @@ fun TransactionItem(item: Transaction, onEditClick: (String) -> Unit, onDeleteCl
                 Text(text = ":" )
                 Text(text = ":"  )
             }
-            Column(modifier = Modifier.weight(0.5f)) {
+            Column(modifier = Modifier.weight(0.7f)) {
                 Text(text = item.name)
                 Text(text = item.category_id)
                 Text(text = item.user_id)
