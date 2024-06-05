@@ -35,7 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.benasher44.uuid.uuid4
 import id.ac.unpas.managemen_keuangan.models.Category
 import id.ac.unpas.managemen_keuangan.models.User
-import id.ac.unpas.managemen_keuangan.ui.screens.category.CategoryViewModel
+import id.ac.unpas.managemen_keuangan.ui.screens.CategoryScreens.CategoryViewModel
 import id.ac.unpas.managemen_keuangan.ui.screens.UserScreens.UserViewModel
 import kotlinx.coroutines.launch
 

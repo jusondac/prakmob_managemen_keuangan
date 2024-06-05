@@ -1,7 +1,10 @@
-package id.ac.unpas.managemen_keuangan.ui.screens.category
+package id.ac.unpas.managemen_keuangan.ui.screens.CategoryScreens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,8 +13,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import id.ac.unpas.managemen_keuangan.models.Category
 import kotlinx.coroutines.launch
@@ -56,7 +61,6 @@ fun ListCategoryScreen(modifier: Modifier = Modifier,  onClick: (String) -> Unit
             name.value = "CATEGORY"
         }
     }
-
 //    viewModel.isDeleted.observe(LocalLifecycleOwner.current) {
 //        if (deleting.value && it) {
 //            deleting.value = false
